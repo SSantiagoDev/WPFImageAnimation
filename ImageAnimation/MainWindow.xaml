@@ -1,0 +1,55 @@
+﻿<Window x:Class="ImageAnimation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImageAnimation"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+
+        <StackPanel Orientation="Vertical" Margin="20">
+            <Button Content="Start" Command="{Binding StartCommand}" Margin="5" />
+            <Button Content="Stop" Command="{Binding StopCommand}" Margin="5" />
+            <Image Source="NavRefresh.png" Width="32" Height="32" Margin="5">
+                <Image.Style>
+
+                    <Style TargetType="{x:Type Image}">
+                        <Setter Property="LayoutTransform">
+                            <Setter.Value>
+                                <RotateTransform Angle="0"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+
+                            <DataTrigger Binding="{Binding Status}" Value="Running">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(LayoutTransform).(RotateTransform.Angle)"
+                                                             From="0"
+                                                             To="360"
+                                                             Duration="0:0:1"
+                                                             RepeatBehavior="Forever"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard FillBehavior="Stop">
+                                            <DoubleAnimation Storyboard.TargetProperty="(LayoutTransform).(RotateTransform.Angle)"
+                                                             To="90"
+                                                             Duration="0:0:0" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </StackPanel>
+        
+    </Grid>
+</Window>
